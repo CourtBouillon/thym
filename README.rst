@@ -1,7 +1,7 @@
 thym is a tiny web application serving surveys.
 
 * Free software: BSD license
-* For Python 3.8+
+* For Python 3.7+
 * Code, issues, tests: https://github.com/CourtBouillon/thym
 * Code of conduct: https://www.courtbouillon.org/code-of-conduct
 * Professional support: https://www.courtbouillon.org

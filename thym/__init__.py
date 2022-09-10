@@ -51,7 +51,8 @@ def survey(survey_id):
         (survey_id,))
     choices = cursor.fetchall()
 
-    if (user := request.cookies.get('user')) is not None:
+    user = request.cookies.get('user')
+    if user is not None:
         cursor.execute(
             'SELECT 1 '
             'FROM answer '
@@ -73,7 +74,8 @@ def save_survey(survey_id):
     connection = get_connection()
     cursor = connection.cursor()
     check_survey(survey_id, cursor)
-    if (user := request.cookies.get('user')) is None:
+    user = request.cookies.get('user')
+    if user is None:
         user = uuid4().hex
 
     cursor.execute(
