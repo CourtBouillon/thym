@@ -1,0 +1,229 @@
+@font-face {
+  font-family: ClarityCity;
+  font-weight: 400;
+  src: local("ClarityCity Regular"), local("ClarityCity-Regular"), url(https://www.courtbouillon.org/static/fonts/ClarityCity-Regular.woff2);
+}
+@font-face {
+  font-family: ClarityCity;
+  font-weight: 700;
+  src: local("ClarityCity Bold"), local("ClarityCity-Bold"), url(https://www.courtbouillon.org/static/fonts/ClarityCity-Bold.woff2);
+}
+@font-face {
+  font-family: ClarityCity;
+  font-style: italic;
+  font-weight: 400;
+  src: local("ClarityCity RegularItalic"), local("ClarityCity-RegularItalic"), url(https://www.courtbouillon.org/static/fonts/ClarityCity-RegularItalic.woff2);
+}
+@font-face {
+  font-family: Inconsolata;
+  font-weight: 400;
+  src: local("Inconsolata"), url(https://www.courtbouillon.org/static/fonts/Inconsolata-Regular.woff2);
+}
+@font-face {
+  font-family: Inconsolata;
+  font-weight: 700;
+  src: local("Inconsolata Bold"), url(https://www.courtbouillon.org/static/fonts/Inconsolata-Bold.woff2);
+}
+
+:root {
+  --darker-black: #222;
+  --black: #333;
+  --lighter-black: #444;
+  --grey: #f2f2f1;
+  --red: #e8403a;
+  --white: #fff;
+}
+body {
+  accent-color: var(--red);
+  caret-color: var(--red);
+  color: var(--black);
+  counter-reset: question;
+  font-family: ClarityCity;
+  font-size: 1.3em;
+  line-height: 1.5;
+  margin: 0;
+}
+
+a {
+  color: var(--red);
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0.5em 0 1.5em -1em;
+}
+td, th {
+  padding: 0.5em 1em;
+  text-align: right;
+}
+tr > :first-child {
+  text-align: left;
+}
+thead tr > * {
+  border-bottom: 1px solid var(--lighter-black);
+  font-weight: 400;
+}
+tfoot tr > * {
+  border-top: 1px solid var(--lighter-black);
+  font-weight: 400;
+}
+tbody tr:nth-child(odd) {
+  background: var(--grey);
+}
+tbody tr:nth-child(even) {
+  background: var(--white);
+}
+
+ul {
+  padding: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  transform: translate(-250%, 0) scale(1.5);
+  position: absolute;
+}
+input[type="range"] {
+  margin: 0 auto;
+  width: 80%;
+}
+input[type="range"] + ul {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.25em 0 0;
+  padding: 0 0.25em;
+  width: 80%;
+}
+input[type="range"] + ul li {
+  display: block;
+  flex: none;
+  padding-left: 0.1em;
+}
+input[type="submit"] {
+  background: transparent;
+  border: 1px solid;
+  color: var(--red);
+  display: block;
+  margin: 0 auto;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  transition: 0.5s;
+}
+input[type="submit"]:hover, input[type="submit"]:focus {
+  background: var(--red);
+  color: var(--white);
+}
+textarea {
+  display: block;
+  height: 8em;
+  padding: 0.5em;
+  width: 80%;
+}
+progress {
+  display: block;
+}
+label:has(input[type="checkbox"]) ~ label:has(textarea),
+label:has(input[type="radio"]) ~ label:has(textarea) {
+  margin-top: -1em;
+}
+label {
+  display: block;
+  line-height: 1;
+  margin: 1em 0;
+}
+label:has(input[type="range"]) {
+  margin-top: 0;
+}
+
+h1 {
+  background: var(--red);
+  font-family: Inconsolata;
+  font-size: 3em;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  padding: 2em 20% 3em 40%;
+}
+h1::before {
+  background: url(https://www.courtbouillon.org/static/images/logo-white.svg) right center no-repeat;
+  content: "";
+  height: 5em;
+  position: absolute;
+  transform: translate(-120%, -1em);
+  width: 30%;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+  line-height: 1;
+  margin: 0.5em 0 1em;
+}
+h2::before {
+  color: var(--red);
+  content: counter(question);
+  counter-increment: question;
+  padding-right: 0.5em;
+  position: absolute;
+  transform: translate(-100%, 0);
+}
+
+aside,
+.page:not(:first-of-type) {
+  border: 1px solid var(--grey);
+  border-radius: 3px;
+  box-shadow: 0 0.5em 1.5em var(--grey);
+  margin: 2em auto;
+  max-width: 40rem;
+  padding: 1.5em 3.5em 1.5em 5em;
+  transition: 0.5s;
+}
+aside:hover,
+.page:not(:first-of-type):hover,
+.page:not(:first-of-type):has(:focus) {
+  background: var(--grey);
+  border-color: currentcolor;
+}
+aside {
+  font-size: 2em;
+  line-height: 1;
+  padding: 1em;
+}
+
+h1,
+.page:first-of-type {
+  background: var(--red);
+  border: 1px solid var(--red);
+  color: var(--white);
+  margin: 0;
+}
+.page:first-of-type {
+  box-shadow: 0 0.5em 0.5em var(--grey);
+  margin: -8em 0 4em;
+  min-height: 8em;
+  padding: 0 10% 4em 40%;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 1em;
+  }
+  .page:not(:first-of-type) {
+    padding: 1.5em 2.5em 1.5em 4em;
+  }
+  h1, .page:first-of-type {
+    margin: 0;
+    padding: 1rem;
+  }
+  h1 {
+    font-size: 2em;
+  }
+  h1::before {
+    background-position: 50% 0;
+    display: block;
+    height: 3em;
+    margin: 0.5em 0 1.5em;
+    position: static;
+    transform: none;
+    width: 100%;
+  }
+}

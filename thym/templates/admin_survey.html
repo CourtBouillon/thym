@@ -1,0 +1,76 @@
+{% extends '_layout.jinja2' %}
+
+{% block body %}
+  {% set users = answers | selectattr('user') | map(attribute='user') | unique | list | length %}
+  <h1>Admin: {{ answers[0].name }}</h1>
+
+  {% for page_id, answers in answers | groupby('page_id') %}
+    <div class="page">
+      {% for block_id, answers in answers | groupby('block_id') %}
+        {% set block = answers[0] %}
+        {{ block.text | safe }}
+
+        {% if block.type == 'html' %}
+        {% elif block.type in ('radio', 'checkbox') %}
+          <table>
+            <thead>
+              <tr>
+                <th>Answer</th>
+                <th>#</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for choice_id, answers in answers | groupby('choice_id') %}
+                {% set number = answers | selectattr('value', 'equalto', choice_id | string) | list | length %}
+                {% set percent = (100 * number / users) if users else 0 %}
+                <tr>
+                  <td>{{ answers[0].choice_value | safe }}</td>
+                  <td>{{ number }}</td>
+                  <td>{{ percent | round | int }}% <progress value="{{ percent }}" max="100">{{ percent }}%</progress></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% elif block.type == 'textarea' %}
+          <ul>
+            {% for answer in answers %}
+              {% if answer.value %}
+                <li>{{ answer.value }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% elif block.type == 'range' %}
+          {% set values = [] %}
+          {% set numbers = [] %}
+          <table>
+            <thead>
+              <tr>
+                <th>Mark</th>
+                <th>#</th>
+                <th>%</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for choice_id, answers in answers | groupby('choice_id') %}
+                {% set choice_value = answers[0].choice_value %}
+                {% set number = answers | selectattr('value', 'equalto', choice_value | string) | list | length %}
+                {% set percent = (100 * number / users) if users else 0 %}
+                <tr>
+                  <td>{{ choice_value | safe }}</td>
+                  <td>{{ number }}</td>
+                  <td>{{ percent | round | int }}% <progress value="{{ percent }}" max="100">{{ percent }}%</progress></td>
+                </tr>
+                {{ values.append(number * (choice_value | int)) or '' }}
+                {{ numbers.append(number) or '' }}
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr><th colspan="2">Mean</th><td>{{ ((values | sum) / (numbers | sum)) | round(2) }}</td></tr>
+            </tfoot>
+          </table>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% endblock %}

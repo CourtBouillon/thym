@@ -1,0 +1,11 @@
+{% extends '_layout.jinja2' %}
+
+{% block body %}
+  <aside>
+    <ul>
+      {% for survey in surveys %}
+        <li><a href="{{ url_for('admin_survey', survey_id=survey.id) }}">{{ survey.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </aside>
+{% endblock %}

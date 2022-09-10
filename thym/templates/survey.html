@@ -1,0 +1,51 @@
+{% extends '_layout.jinja2' %}
+
+{% block body %}
+  <h1>{{ survey.name }}</h1>
+
+  <form method="post">
+    {% for page_id, blocks in choices | groupby('page_id') %}
+      <div class="page">
+        {% for block_id, choices in blocks | groupby('block_id') %}
+          {% set block = choices[0] %}
+          {{ block.text | safe }}
+
+          {% if block.type == 'html' %}
+          {% elif block.type == 'radio' %}
+            {% for choice in choices %}
+              <label>
+                <input type="radio" name="{{ block_id }}" value="{{ choice.id }}" {{ 'required' if block.required }} />
+                {{ choice.value | safe }}
+              </label>
+            {% endfor %}
+          {% elif block.type == 'checkbox' %}
+            {% for choice in choices %}
+              <label>
+                <input type="checkbox" name="{{ block_id }}" value="{{ choice.id }}" />
+                {{ choice.value | safe }}
+              </label>
+            {% endfor %}
+          {% elif block.type == 'textarea' %}
+            <label>
+              <textarea name="{{ block_id }}" {{ 'required' if block.required }}></textarea>
+            </label>
+          {% elif block.type == 'range' %}
+            <label>
+              {% set min = choices[0].value | int %}
+              {% set max = choices[-1].value | int %}
+              {% set step = (max - min + 1) / (choices | length) %}
+              <input type="range" name="{{ block_id }}" min="{{ min }}" max="{{ max }}" step="{{ step }}" value="{{ min }}" {{ 'required' if block.required }} />
+              <ul>
+                {% for choice in choices %}
+                  <li>{{ choice.value }}</li>
+                {% endfor %}
+              </ul>
+            </label>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+    <input type="submit" value="Submit" />
+  </form>
+{% endblock %}
