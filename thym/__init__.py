@@ -142,7 +142,9 @@ def admin_survey(survey_id):
         'ORDER BY page.number, block.number, choice.number ',
         (survey_id,))
     answers = cursor.fetchall()
-    return render_template('admin_survey.html', answers=answers)
+    if answers:
+        return render_template('admin_survey.html', answers=answers)
+    return abort(404)
 
 
 @app.route('/thank-you')
