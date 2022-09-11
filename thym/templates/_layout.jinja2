@@ -1,6 +1,8 @@
 <html>
   <head>
+    <title>CourtBouillon surveys{% if survey %} − {{ survey.name }}{% endif %}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="icon" type="image/png" href="https://www.courtbouillon.org/static/images/favicon.png" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
   </head>
 
