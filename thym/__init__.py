@@ -139,7 +139,7 @@ def admin_survey(survey_id):
         'LEFT OUTER JOIN answer ON answer.block_id = block.id '
         'JOIN survey ON page.survey_id = survey.id '
         'WHERE survey_id = (?) '
-        'ORDER BY page.number, block.number, choice.number ',
+        'ORDER BY page.number, block.number, choice.number, answer.id ',
         (survey_id,))
     answers = cursor.fetchall()
     if answers:
