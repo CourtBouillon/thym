@@ -41,7 +41,7 @@ def survey(survey_id):
 
     cursor.execute(
         'SELECT page.id AS page_id, '
-        '       block.id AS block_id, block.type, block.text, '
+        '       block.id AS block_id, block.type, block.text, block.required, '
         '       choice.id, choice.value '
         'FROM page '
         'JOIN block ON block.page_id = page.id '
